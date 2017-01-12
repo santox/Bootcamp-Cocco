@@ -97,7 +97,7 @@ public class State {
                 ", \r\nAbbreviation='" + abbreviation + '\'' +
                 ", \r\nArea=" + area + "KM" +
                 ", \r\nCapital='" + capital + '\'' +
-                ", \r\nWeather=" + weather +
+                //", \r\nWeather=" + weather +
                 '}';
     }
 }

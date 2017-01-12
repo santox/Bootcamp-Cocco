@@ -64,14 +64,15 @@ public class Country {
 
     @Override
     public String toString() {
-        String allStates = "{";
+        /*String allStates = "{";
         for(State state : states){allStates += "\r\n" + state.toString() + '\'';}
         allStates += '}';
+        */
         return "Country{" +
                 "\r\nName='" + name + '\'' +
                 ", \r\nabbr2='" + countryID2 + '\'' +
                 ", \r\nabbr3='" + countryID3 + '\'' +
-                ", \r\nStates=" + allStates +
+                //", \r\nStates=" + allStates +
                 '}';
     }
 }

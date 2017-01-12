@@ -4,35 +4,35 @@ package model;
  * Created by santi on 11/1/2017.
  */
 public class Atmosphere {
-    private int idForecast;
+    private int idAtmosphere;
     private int humidity;
     private float pressure;
     private float visibility;
     private int rising;
 
     public Atmosphere() {
-        idForecast = -1;
+        idAtmosphere = -1;
         humidity = -1;
         pressure = -1f;
         visibility = -1f;
         rising = -1;
     }
 
-    public Atmosphere(int idForecast, int humidity, float pressure,
+    public Atmosphere(int idAtmosphere, int humidity, float pressure,
                       float visibility, int rising) {
-        this.idForecast = idForecast;
+        this.idAtmosphere = idAtmosphere;
         this.humidity = humidity;
         this.pressure = pressure;
         this.visibility = visibility;
         this.rising = rising;
     }
 
-    public int getIdForecast() {
-        return idForecast;
+    public int getidAtmosphere() {
+        return idAtmosphere;
     }
 
-    public void setIdForecast(int idForecast) {
-        this.idForecast = idForecast;
+    public void setidAtmosphere(int idAtmosphere) {
+        this.idAtmosphere = idAtmosphere;
     }
 
     public int getHumidity() {
