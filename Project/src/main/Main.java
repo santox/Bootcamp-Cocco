@@ -1,7 +1,6 @@
 package main;
 
 import model.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+
         Forecast f = new Forecast(1, new Date(), "", 20, 10, "test");
         Forecast[] forecasts = new Forecast[10];
         for (int i = 0; i < forecasts.length; i++) {
@@ -25,5 +25,6 @@ public class Main {
         Country c = new Country("Argentina","AR","ARG",states);
 
         System.out.println(c.toString());
+
     }
 }
