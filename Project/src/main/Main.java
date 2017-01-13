@@ -1,5 +1,6 @@
 package main;
 
+import controller.*;
 import model.*;
 
 import java.text.SimpleDateFormat;
@@ -16,6 +17,17 @@ public class Main {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
         List<Country> countries = new ArrayList<Country>();
+
+        //DB CONNECTION TEST
+        DataController dc = new DataController();
+        try {
+            dc.openConnection();
+        } catch (Exception e){
+            System.out.println("Error message: " + e.getMessage());
+        }finally {
+            dc.closeConnection();
+        }
+
 
         while (!exit){
             System.out.println();
