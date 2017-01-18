@@ -1,4 +1,4 @@
-package com.cocco.bootcamp.model;
+package com.cocco.bootcamp.domain;
 
 /**
  * Created by santi on 11/1/2017.

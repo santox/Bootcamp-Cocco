@@ -1,4 +1,4 @@
-package com.cocco.bootcamp.model;
+package com.cocco.bootcamp.domain;
 
 import java.util.ArrayList;
 import java.util.List;

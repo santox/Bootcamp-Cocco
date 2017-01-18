@@ -1,7 +1,7 @@
 package com.cocco.bootcamp.main;
 
 import com.cocco.bootcamp.config.*;
-import com.cocco.bootcamp.model.*;
+import com.cocco.bootcamp.domain.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
