@@ -17,7 +17,7 @@ public class DataSource {
     private DataSource(){
     }
 
-    public void openConnection(){
+    public Connection openConnection(){
         try {
             String userName = "root";
             String password = "1234";
@@ -25,15 +25,16 @@ public class DataSource {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(url,userName,password);
         } catch (Exception e) {
-            System.out.println("Connection error. Message: " + e.getMessage());
+            System.out.println("Connection error at opening. Message: " + e.getMessage());
         }
+        return con;
     }
 
     public void closeConnection(){
         try {
             con.close();
         } catch (Exception e) {
-            System.out.println("Connection error. Message: " + e.getMessage());
+            System.out.println("Connection error at closing. Message: " + e.getMessage());
         }
     }
 }

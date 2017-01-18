@@ -2,6 +2,7 @@ package com.cocco.bootcamp.main;
 
 import com.cocco.bootcamp.config.*;
 import com.cocco.bootcamp.domain.*;
+import com.cocco.bootcamp.persistence.CountryController;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Main {
         int option = 0;
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
+        CountryController countryController = new CountryController();
         List<Country> countries = new ArrayList<Country>();
 
         //DB CONNECTION TEST
@@ -55,15 +57,23 @@ public class Main {
                     System.out.println(name + " 3 letter abbreviation: ");
                     String countryID3 = scanner.next();
 
+                    /*
                     Country country = new Country();
                     country.setName(name);
                     country.setCountryID2(countryID2);
                     country.setCountryID3(countryID3);
                     countries.add(country);
+                    */
+
+                    countryController.addCountry(name, countryID2, countryID3);
+
                     System.out.println();
-                    System.out.println(country.getName() + " added!");
+                    System.out.println(name + " added!");
                     break;
                 case 2:
+                    //Fetch countries from DataBase
+                    countries = countryController.getCountries();
+
                     //Displaying countries
                     System.out.println();
                     StringBuilder sb = new StringBuilder();
