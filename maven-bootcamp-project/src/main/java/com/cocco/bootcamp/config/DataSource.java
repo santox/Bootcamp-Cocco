@@ -1,4 +1,4 @@
-package controller;
+package com.cocco.bootcamp.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,16 @@ import java.sql.DriverManager;
 /**
  * Created by santi on 13/1/2017.
  */
-public class DataController {
+public class DataSource {
+    private static DataSource ourInstance = new DataSource();
     private Connection con;
+
+    public static DataSource getInstance() {
+        return ourInstance;
+    }
+
+    private DataSource(){
+    }
 
     public void openConnection(){
         try {

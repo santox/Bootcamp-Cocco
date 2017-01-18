@@ -1,7 +1,7 @@
-package main;
+package com.cocco.bootcamp.main;
 
-import controller.*;
-import model.*;
+import com.cocco.bootcamp.config.*;
+import com.cocco.bootcamp.model.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Main {
         List<Country> countries = new ArrayList<Country>();
 
         //DB CONNECTION TEST
-        DataController dc = new DataController();
+        DataSource dc = DataSource.getInstance();
         try {
             dc.openConnection();
         } catch (Exception e){
@@ -207,7 +207,7 @@ public class Main {
                     System.out.println();
                     Date sourceDate = weather.getTodayWeather().getDate();
                     Date myDate;
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE");
 
                     for (int i = 0; i < 10; i++) {
                         Forecast forecast = new Forecast();

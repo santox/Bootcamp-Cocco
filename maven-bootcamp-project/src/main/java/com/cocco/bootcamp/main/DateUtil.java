@@ -1,4 +1,4 @@
-package main;
+package com.cocco.bootcamp.main;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package model;
+package com.cocco.bootcamp.model;
 
 import java.util.Calendar;
 import java.util.Date;
