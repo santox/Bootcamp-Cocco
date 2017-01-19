@@ -3,6 +3,7 @@ package com.cocco.bootcamp.main;
 import com.cocco.bootcamp.config.*;
 import com.cocco.bootcamp.domain.*;
 import com.cocco.bootcamp.persistence.CountryController;
+import com.cocco.bootcamp.persistence.StateController;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ public class Main {
         int option = 0;
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
-        CountryController countryController = new CountryController();
         List<Country> countries = new ArrayList<Country>();
 
         //DB CONNECTION TEST
@@ -30,6 +30,8 @@ public class Main {
             dc.closeConnection();
         }
 
+        System.out.println("Welcome to Santiago Cocco's app for Globant's Java Bootcamp 2017!");
+        System.out.println("Contact email: santi-cocco@hotmail.com");
 
         while (!exit){
             System.out.println();
@@ -39,9 +41,9 @@ public class Main {
             System.out.println("3 - Add a state to an existing country.");
             System.out.println("4 - Show states from an existing country.");
             System.out.println("5 - Add weather data to an existing state.");
-            System.out.println("6 - Show weather from an existing state");
-            System.out.println("7 - Exit");
-            System.out.println("Write the number of the desired action");
+            System.out.println("6 - Show weather from an existing state.");
+            System.out.println("7 - Exit.");
+            System.out.println("Write the number of the desired action.");
             option = scanner.nextInt();
 
             switch (option){
@@ -66,15 +68,11 @@ public class Main {
                     */
 
                     System.out.println();
-                    if (countryController.addCountry(name, countryID2, countryID3)) {
-                        System.out.println(name + " added!");
-                    } else {
-                        System.out.println(name + " updated!");
-                    }
+                    System.out.println(CountryController.addCountry(name, countryID2, countryID3));
                     break;
                 case 2:
                     //Fetch countries from DataBase
-                    countries = countryController.getCountries();
+                    countries = CountryController.getCountries();
 
                     //Displaying countries
                     System.out.println();
@@ -90,17 +88,22 @@ public class Main {
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String abbr = scanner.next();
-                    Country selectedCountry = null;
+                    if (!CountryController.isAlreadyExists(abbr)) {
+                        System.out.println("Country does not exist.");
+                        break;
+                    }
+
+                    /*Country selectedCountry = null;
                     for(Country co : countries){
                         if (co.getCountryID3().equalsIgnoreCase(abbr)){
                             selectedCountry = co;
                         }
                     }
-                    if (selectedCountry == null) {break;}
+                    if (selectedCountry == null) {break;}*/
 
                     //State input
                     System.out.println();
-                    System.out.println("Name of the state to be added to " + selectedCountry.getName() + ": ");
+                    System.out.println("Name of the state to be added to " + abbr + ": ");
                     String stateName = scanner.next();
                     System.out.println();
                     System.out.println(stateName + "2 letter abbreviation: ");
@@ -112,33 +115,40 @@ public class Main {
                     System.out.println(stateName + " capital: ");
                     String capital = scanner.next();
 
-                    State state = new State();
+                    /*State state = new State();
                     state.setCountryID3(selectedCountry.getCountryID3());
                     state.setName(stateName);
                     state.setAbbreviation(stateAbbreviation);
                     state.setArea(area);
                     state.setCapital(capital);
-                    selectedCountry.addState(state);
+                    selectedCountry.addState(state);*/
+
                     System.out.println();
-                    System.out.println(state.getName() + " added to " + selectedCountry.getName() + ". ");
+                    System.out.println(StateController.addState(abbr, stateName, stateAbbreviation, area, capital));
                     break;
                 case 4:
                     //Selected country input
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String countryAbbr = scanner.next();
-                    Country selecCountry = null;
+                    if (!CountryController.isAlreadyExists(countryAbbr)) {
+                        System.out.println("Country does not exist.");
+                        break;
+                    }
+
+                    /*Country selecCountry = null;
                     for(Country cou : countries){
                         if (cou.getCountryID3().equalsIgnoreCase(countryAbbr)){
                             selecCountry = cou;
                         }
                     }
-                    if (selecCountry == null) {break;}
+                    if (selecCountry == null) {break;}*/
 
+                    List<State> stateList = StateController.getStates(countryAbbr);
                     //States output
                     System.out.println();
                     StringBuilder builder = new StringBuilder();
-                    for (State s : selecCountry.getStates()){
+                    for (State s : stateList){
                         builder.append(s.toString());
                         builder.append("\r\n");
                     }

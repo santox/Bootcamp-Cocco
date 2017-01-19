@@ -13,50 +13,16 @@ import java.util.List;
  * Created by santi on 18/1/2017.
  */
 public class CountryController {
-    DataSource dataSource = DataSource.getInstance();
+    private static DataSource dataSource = DataSource.getInstance();
 
-    public boolean addCountry(String name, String countryID2, String countryID3) {
-        boolean alreadyExists = false;
-        boolean inserted = false;
-        //Check if country PK already exists
-        String query = "select country_name from country where country_id3 = ?;";
-        try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
-            statement.setString(1, countryID3);
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                alreadyExists = true;
-            } else {
-                alreadyExists = false;
-            }
-            statement.close();
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dataSource.closeConnection();
-        }
+    public static String addCountry(String name, String countryID2, String countryID3) {
+        String message = "Nothing happened.";
+        boolean alreadyExists = isAlreadyExists(countryID3);
+        String query;
 
         //If already exists Update, else Insert
         if (alreadyExists) {
-            query = "update country"
-                    + " set country_name = ?,"
-                    + " country_id2 = ?"
-                    + " where country_id3 = ?;";
-            try {
-                PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
-                statement.setString(1, name);
-                statement.setString(2, countryID2);
-                statement.setString(3, countryID3);
-
-                statement.executeUpdate();
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                dataSource.closeConnection();
-            }
+            message = updateCountry(name, countryID2, countryID3);
         } else {
             query = "insert into country ("
                     + " country_name,"
@@ -71,17 +37,66 @@ public class CountryController {
 
                 statement.executeUpdate();
                 statement.close();
-                inserted = true;
+                message = name + " added!";
             } catch (SQLException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                System.out.println("SQL Exception during INSERT message: " + e.getMessage());
             } finally {
                 dataSource.closeConnection();
             }
         }
-        return inserted;
+        return message;
     }
 
-    public List<Country> getCountries() {
+    private static String updateCountry(String name, String countryID2, String countryID3) {
+        String message = "Nothing happened.";
+        String query;
+        query = "update country"
+                + " set country_name = ?,"
+                + " country_id2 = ?"
+                + " where country_id3 = ?;";
+        try {
+            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            statement.setString(1, name);
+            statement.setString(2, countryID2);
+            statement.setString(3, countryID3);
+
+            statement.executeUpdate();
+            statement.close();
+            message = name + " updated!";
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            System.out.println("SQL Exception during UPDATE message: " + e.getMessage());
+        } finally {
+            dataSource.closeConnection();
+        }
+        return message;
+    }
+
+    public static boolean isAlreadyExists(String countryID3) {
+        //Check if country PK already exists
+        boolean alreadyExists = false;
+        String query = "select country_name" +
+                " from country" +
+                " where country_id3 = ?;";
+        try {
+            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            statement.setString(1, countryID3);
+
+            ResultSet resultSet = statement.executeQuery();
+            alreadyExists = resultSet.next();
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            System.out.println("SQL Exception during SELECT message: " + e.getMessage());
+        } finally {
+            dataSource.closeConnection();
+        }
+        return alreadyExists;
+    }
+
+    public static List<Country> getCountries() {
         List<Country> countries = new ArrayList<Country>();
         String query = "select"
                 + " country_name,"
@@ -100,7 +115,8 @@ public class CountryController {
             statement.close();
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("SQL Exception during SELECT message: " + e.getMessage());
         } finally {
             dataSource.closeConnection();
         }
