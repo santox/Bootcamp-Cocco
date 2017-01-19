@@ -1,8 +1,7 @@
 package com.cocco.bootcamp.persistence;
 
 import com.cocco.bootcamp.config.DataSource;
-import com.cocco.bootcamp.domain.Forecast;
-import com.cocco.bootcamp.domain.Weather;
+import com.cocco.bootcamp.domain.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -199,5 +198,85 @@ public class WeatherController {
             dataSource.closeConnection();
         }
         return message;
+    }
+
+    public static Weather getWeatherData(int stateID) {
+        Weather weather = null;
+        Connection con = dataSource.openConnection();
+        String query = "select"
+                + " id_weather,"
+                + " todayweather_date,"
+                + " temperature,"
+                + " description,"
+                + " speed,"
+                + " direction,"
+                + " humidity,"
+                + " pressure,"
+                + " visibility,"
+                + " rising"
+                + " from weather"
+                + " inner join todayweather"
+                + " on weather.id_today_weather=todayweather.id_today_weather"
+                + " inner join wind"
+                + " on weather.id_wind=wind.id_wind"
+                + " inner join atmosphere"
+                + " on weather.id_atmosphere=atmosphere.id_atmosphere"
+                + " where id_state = ?"
+                + " order by id_weather desc"
+                + " limit 1;";
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, stateID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                TodayWeather tw = new TodayWeather();
+                tw.setDate(resultSet.getDate("todayweather_date"));
+                tw.setTemperature(resultSet.getInt("temperature"));
+                tw.setDescription(resultSet.getString("description"));
+                Wind w = new Wind();
+                w.setWindSpeed(resultSet.getInt("speed"));
+                w.setWindDirection(resultSet.getInt("direction"));
+                Atmosphere a = new Atmosphere();
+                a.setHumidity(resultSet.getInt("humidity"));
+                a.setPressure(resultSet.getFloat("pressure"));
+                a.setVisibility(resultSet.getFloat("visibility"));
+                a.setRising(resultSet.getInt("rising"));
+                weather = new Weather();
+                weather.setIdWeather(resultSet.getInt("id_weather"));
+                weather.setTodayWeather(tw);
+                weather.setWind(w);
+                weather.setAtmosphere(a);
+
+                query = "select"
+                        + " id_forecast,"
+                        + " forecast_date,"
+                        + " forecast_day,"
+                        + " high,"
+                        + " low,"
+                        + " forecast_text"
+                        + " from forecasts"
+                        + " where id_weather = ?;";
+                statement = con.prepareStatement(query);
+                statement.setInt(1, weather.getIdWeather());
+                resultSet = statement.executeQuery();
+                for (int i = 0; i < 10; i++) {
+                    if (resultSet.next()) {
+                        weather.getForecasts()[i] = new Forecast();
+                        weather.getForecasts()[i].setDate(resultSet.getDate("forecast_date"));
+                        weather.getForecasts()[i].setDay(resultSet.getString("forecast_day"));
+                        weather.getForecasts()[i].setHigh(resultSet.getInt("high"));
+                        weather.getForecasts()[i].setLow(resultSet.getInt("low"));
+                        weather.getForecasts()[i].setText(resultSet.getString("forecast_text"));
+                    }
+                }
+                statement.close();
+            }
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            System.out.println("SQL Exception message: " + e.getMessage());
+        } finally {
+            dataSource.closeConnection();
+        }
+        return weather;
     }
 }

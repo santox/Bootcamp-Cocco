@@ -42,8 +42,8 @@ public class Main {
             System.out.println("2 - Show countries.");
             System.out.println("3 - Add a state to an existing country.");
             System.out.println("4 - Show states from an existing country.");
-            System.out.println("5 - Add weather data to an existing state.");
-            System.out.println("6 - Show weather from an existing state.");
+            System.out.println("5 - Add new weather data to an existing state.");
+            System.out.println("6 - Show the latest weather data from an existing state.");
             System.out.println("7 - Exit.");
             System.out.println("Write the number of the desired action.");
             option = scanner.nextInt();
@@ -277,26 +277,39 @@ public class Main {
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String cAbb = scanner.next();
-                    Country seCountry = null;
+                    if (!CountryController.isAlreadyExists(cAbb)) {
+                        System.out.println("Country does not exist.");
+                        break;
+                    }
+
+                    /*Country seCountry = null;
                     for(Country co : countries){
                         if (co.getCountryID3().equalsIgnoreCase(cAbb)){
                             seCountry = co;
                         }
                     }
-                    if (seCountry == null) {break;}
+                    if (seCountry == null) {break;}*/
 
                     //Selected state input
                     System.out.println();
                     System.out.println("2 letter state abbreviation: ");
                     String staAbbr = scanner.next();
-                    State seState = null;
+                    State sState = StateController.getState(cAbb, staAbbr);
+                    if (sState == null) {
+                        System.out.println("State does not exist.");
+                        break;
+                    }
+
+                    /*State seState = null;
                     for (State st : seCountry.getStates()){
                         if (st.getAbbreviation().equalsIgnoreCase(staAbbr)){
                             seState = st;
                         }
                     }
                     if (seState == null) {break;}
-                    System.out.println(seState.getWeather().toString());
+                    System.out.println(seState.getWeather().toString());*/
+
+                    System.out.println(WeatherController.getWeatherData(sState.getIdState()).toString());
                     break;
                 case 7:
                     exit = true;
