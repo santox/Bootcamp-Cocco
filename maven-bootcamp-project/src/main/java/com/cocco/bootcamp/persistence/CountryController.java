@@ -15,25 +15,70 @@ import java.util.List;
 public class CountryController {
     DataSource dataSource = DataSource.getInstance();
 
-    public void addCountry(String name, String countryID2, String countryID3) {
-        String query = "insert into country ("
-                + " country_name,"
-                + " country_id2,"
-                + " country_id3 ) values ("
-                + "?, ?, ?);";
+    public boolean addCountry(String name, String countryID2, String countryID3) {
+        boolean alreadyExists = false;
+        boolean inserted = false;
+        //Check if country PK already exists
+        String query = "select country_name from country where country_id3 = ?;";
         try {
             PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
-            statement.setString(1, name);
-            statement.setString(2, countryID2);
-            statement.setString(3, countryID3);
+            statement.setString(1, countryID3);
 
-            statement.executeUpdate();
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                alreadyExists = true;
+            } else {
+                alreadyExists = false;
+            }
             statement.close();
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             dataSource.closeConnection();
         }
+
+        //If already exists Update, else Insert
+        if (alreadyExists) {
+            query = "update country"
+                    + " set country_name = ?,"
+                    + " country_id2 = ?"
+                    + " where country_id3 = ?;";
+            try {
+                PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+                statement.setString(1, name);
+                statement.setString(2, countryID2);
+                statement.setString(3, countryID3);
+
+                statement.executeUpdate();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                dataSource.closeConnection();
+            }
+        } else {
+            query = "insert into country ("
+                    + " country_name,"
+                    + " country_id2,"
+                    + " country_id3 ) values ("
+                    + "?, ?, ?);";
+            try {
+                PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+                statement.setString(1, name);
+                statement.setString(2, countryID2);
+                statement.setString(3, countryID3);
+
+                statement.executeUpdate();
+                statement.close();
+                inserted = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                dataSource.closeConnection();
+            }
+        }
+        return inserted;
     }
 
     public List<Country> getCountries() {

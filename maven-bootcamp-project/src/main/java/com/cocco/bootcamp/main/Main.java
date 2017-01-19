@@ -65,10 +65,12 @@ public class Main {
                     countries.add(country);
                     */
 
-                    countryController.addCountry(name, countryID2, countryID3);
-
                     System.out.println();
-                    System.out.println(name + " added!");
+                    if (countryController.addCountry(name, countryID2, countryID3)) {
+                        System.out.println(name + " added!");
+                    } else {
+                        System.out.println(name + " updated!");
+                    }
                     break;
                 case 2:
                     //Fetch countries from DataBase
