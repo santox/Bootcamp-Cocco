@@ -70,8 +70,8 @@ public class Country {
         */
         return "Country{" +
                 "\r\nName='" + name + '\'' +
-                ", \r\nabbr2='" + countryID2 + '\'' +
-                ", \r\nabbr3='" + countryID3 + '\'' +
+                ", \r\n2 letter abbreviation='" + countryID2 + '\'' +
+                ", \r\n3 letter abbreviation='" + countryID3 + '\'' +
                 //", \r\nStates=" + allStates +
                 '}';
     }

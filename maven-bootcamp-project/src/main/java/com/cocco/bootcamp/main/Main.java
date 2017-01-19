@@ -4,7 +4,9 @@ import com.cocco.bootcamp.config.*;
 import com.cocco.bootcamp.domain.*;
 import com.cocco.bootcamp.persistence.CountryController;
 import com.cocco.bootcamp.persistence.StateController;
+import com.cocco.bootcamp.persistence.WeatherController;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,25 +161,37 @@ public class Main {
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String cAbbr = scanner.next();
-                    Country selCountry = null;
+                    if (!CountryController.isAlreadyExists(cAbbr)) {
+                        System.out.println("Country does not exist.");
+                        break;
+                    }
+
+                    /*Country selCountry = null;
                     for(Country co : countries){
                         if (co.getCountryID3().equalsIgnoreCase(cAbbr)){
                             selCountry = co;
                         }
                     }
-                    if (selCountry == null) {break;}
+                    if (selCountry == null) {break;}*/
 
                     //Selected state input
                     System.out.println();
                     System.out.println("2 letter state abbreviation: ");
                     String stateAbbr = scanner.next();
-                    State selectedState = null;
+                    State selectedState = StateController.getState(cAbbr, stateAbbr);
+                    if (selectedState == null) {
+                        System.out.println("State does not exist.");
+                        break;
+                    }
+
+
+                    /*State selectedState = null;
                     for (State st : selCountry.getStates()){
                         if (st.getAbbreviation().equalsIgnoreCase(stateAbbr)){
                             selectedState = st;
                         }
                     }
-                    if (selectedState == null) {break;}
+                    if (selectedState == null) {break;}*/
 
                     Weather weather = new Weather();
 
@@ -188,7 +202,7 @@ public class Main {
                     TodayWeather todayWeather = new TodayWeather();
                     todayWeather.setDate(new Date());
                     todayWeather.setTemperature(todayTemperature);
-                    todayWeather.setDescription("Today's weather for " + selectedState.getName() + ", " + selCountry.getName());
+                    todayWeather.setDescription("Today's weather for " + selectedState.getName() + ", " + cAbbr);
                     weather.setTodayWeather(todayWeather);
 
                     //Wind input
@@ -247,8 +261,16 @@ public class Main {
                         weather.getForecasts()[i] = forecast;
                     }
 
-                    //Saving weather to the selected state
-                    selectedState.setWeather(weather);
+                    try {
+                        WeatherController.addWeatherItems(weather);
+                        WeatherController.addWeather(weather, selectedState.getIdState());
+                        WeatherController.addForecasts(weather);
+                    } catch (Exception e) {
+                        System.out.println("Error message: " + e.getMessage());
+                        break;
+                    }
+
+                    //selectedState.setWeather(weather);
                     break;
                 case 6:
                     //Selected country input

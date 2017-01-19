@@ -50,6 +50,7 @@ public class StateController {
     public static List<State> getStates(String countryID3) {
         List<State> states = new ArrayList<State>();
         String query = "select"
+                + " id_state,"
                 + " country_id3,"
                 + " state_name,"
                 + " state_abbreviation,"
@@ -62,6 +63,7 @@ public class StateController {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 State state = new State();
+                state.setIdState(resultSet.getInt("id_state"));
                 state.setCountryID3(resultSet.getString("country_id3"));
                 state.setName(resultSet.getString("state_name"));
                 state.setAbbreviation(resultSet.getString("state_abbreviation"));
@@ -78,6 +80,42 @@ public class StateController {
             dataSource.closeConnection();
         }
         return states;
+    }
+
+    public static State getState(String countryID3, String stateAbbreviation) {
+        State state = null;
+        String query = "select"
+                + " id_state,"
+                + " country_id3,"
+                + " state_name,"
+                + " state_abbreviation,"
+                + " area,"
+                + " capital from state"
+                + " where country_id3 = ? and state_abbreviation = ?;";
+        try {
+            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            statement.setString(1, countryID3);
+            statement.setString(2, stateAbbreviation);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                state = new State();
+                state.setIdState(resultSet.getInt("id_state"));
+                state.setCountryID3(resultSet.getString("country_id3"));
+                state.setName(resultSet.getString("state_name"));
+                state.setAbbreviation(resultSet.getString("state_abbreviation"));
+                state.setArea(resultSet.getLong("area"));
+                state.setCapital(resultSet.getString("capital"));
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            System.out.println("SQL Exception during SELECT message: " + e.getMessage());
+        } finally {
+            dataSource.closeConnection();
+        }
+
+        return state;
     }
 
 }
