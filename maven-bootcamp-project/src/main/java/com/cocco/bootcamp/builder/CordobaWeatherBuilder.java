@@ -16,16 +16,36 @@ public class CordobaWeatherBuilder implements WeatherBuilder{
         weather = new Weather();
     }
 
+
+    public void buildIdWeather() {
+        weather.setIdWeather(1);
+    }
+
     public void buildTodayWeather() {
-        weather.setTodayWeather(new TodayWeather(1, new Date(), 60, "Today weather for Cordoba."));
+        TodayWeather tw = new TodayWeather();
+        tw.setIdTodayWeather(1);
+        tw.setDate(new Date());
+        tw.setTemperature(60);
+        tw.setDescription("Today weather for Cordoba.");
+        weather.setTodayWeather(tw);
     }
 
     public void buildWind() {
-        weather.setWind(new Wind(1, 50, 40));
+        Wind w = new Wind();
+        w.setIdWind(1);
+        w.setWindSpeed(50);
+        w.setWindDirection(40);
+        weather.setWind(w);
     }
 
     public void buildAtmosphere() {
-        weather.setAtmosphere(new Atmosphere(1, 30, 20, 10, 9));
+        Atmosphere a = new Atmosphere();
+        a.setidAtmosphere(1);
+        a.setHumidity(30);
+        a.setPressure(20);
+        a.setVisibility(10);
+        a.setRising(9);
+        weather.setAtmosphere(a);
     }
 
     public void buildForecasts() {
@@ -35,7 +55,14 @@ public class CordobaWeatherBuilder implements WeatherBuilder{
         for (int i = 0; i < 10; i++) {
             myDate = DateUtil.addDays(sourceDate, i);
             String dayOfWeek = dateFormat.format(myDate);
-            weather.getForecasts()[i] = new Forecast(i, myDate, dayOfWeek, 60 + i, 40 + i, "Forecast for Cordoba " + myDate);
+            Forecast f = new Forecast();
+            f.setIdForecast(i);
+            f.setDate(myDate);
+            f.setDay(dayOfWeek);
+            f.setHigh(60 + i);
+            f.setLow(40 + i);
+            f.setText("Forecast for Cordoba " + myDate);
+            weather.getForecasts()[i] = f;
         }
     }
 

@@ -16,6 +16,9 @@ public class CountryController {
     private static DataSource dataSource = DataSource.getInstance();
 
     public static String addCountry(String name, String countryID2, String countryID3) {
+        if (countryID2.length() != 2 || countryID3.length() != 3) {
+            return "Country abbreviation incorrect, try again.";
+        }
         String message = "Nothing happened.";
         boolean alreadyExists = isAlreadyExists(countryID3);
         String query;

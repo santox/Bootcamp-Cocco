@@ -16,6 +16,9 @@ public class StateController {
     private static DataSource dataSource = DataSource.getInstance();
 
     public static String addState (String countryID3, String stateName, String stateAbbr, long area, String capital) {
+        if (stateAbbr.length() != 2) {
+            return "State abbreviation incorrect, remember to use 2 letters only. Try again.";
+        }
         String message = "Nothing happened.";
         String query;
         query = "insert into state ("

@@ -13,6 +13,7 @@ public class WeatherDirector {
     }
 
     public void constructWeather() {
+        weatherBuilder.buildIdWeather();
         weatherBuilder.buildTodayWeather();
         weatherBuilder.buildWind();
         weatherBuilder.buildAtmosphere();
