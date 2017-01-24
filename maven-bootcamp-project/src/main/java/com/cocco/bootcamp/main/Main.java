@@ -5,6 +5,8 @@ import com.cocco.bootcamp.domain.*;
 import com.cocco.bootcamp.persistence.CountryController;
 import com.cocco.bootcamp.persistence.StateController;
 import com.cocco.bootcamp.persistence.WeatherController;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,8 @@ public class Main {
         List<Country> countries = new ArrayList<Country>();
 
         //DB CONNECTION TEST
-        DataSource dc = DataSource.getInstance();
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
+        DataSource dc = (DataSource) applicationContext.getBean("dataSource");
         try {
             dc.openConnection();
         } catch (Exception e){

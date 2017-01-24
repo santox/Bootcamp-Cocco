@@ -1,15 +1,20 @@
 package com.cocco.bootcamp.config;
 
+
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
  * Created by santi on 13/1/2017.
  */
+
 public class DataSource {
     private Connection con;
 
     public DataSource(){
+
     }
 
     public Connection getCon() {

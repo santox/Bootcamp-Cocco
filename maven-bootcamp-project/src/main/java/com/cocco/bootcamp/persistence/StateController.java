@@ -2,6 +2,10 @@ package com.cocco.bootcamp.persistence;
 
 import com.cocco.bootcamp.config.DataSource;
 import com.cocco.bootcamp.domain.State;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +16,16 @@ import java.util.List;
 /**
  * Created by santi on 19/1/2017.
  */
+@Component
 public class StateController {
-    private static DataSource dataSource = DataSource.getInstance();
+    //private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
+    //private static DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
+    private static DataSource dataSource;
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public static String addState (String countryID3, String stateName, String stateAbbr, long area, String capital) {
         if (stateAbbr.length() != 2) {
@@ -30,7 +42,8 @@ public class StateController {
                 + " ) values ("
                 + "?, ?, ?, ?, ?);";
         try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            dataSource.openConnection();
+            PreparedStatement statement = dataSource.getCon().prepareStatement(query);
             statement.setString(1, countryID3);
             statement.setString(2, stateName);
             statement.setString(3, stateAbbr);
@@ -61,7 +74,8 @@ public class StateController {
                 + " capital from state"
                 + " where country_id3 = ?;";
         try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            dataSource.openConnection();
+            PreparedStatement statement = dataSource.getCon().prepareStatement(query);
             statement.setString(1, countryID3);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -96,7 +110,8 @@ public class StateController {
                 + " capital from state"
                 + " where country_id3 = ? and state_abbreviation = ?;";
         try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            dataSource.openConnection();
+            PreparedStatement statement = dataSource.getCon().prepareStatement(query);
             statement.setString(1, countryID3);
             statement.setString(2, stateAbbreviation);
             ResultSet resultSet = statement.executeQuery();

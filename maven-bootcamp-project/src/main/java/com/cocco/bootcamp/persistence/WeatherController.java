@@ -2,6 +2,10 @@ package com.cocco.bootcamp.persistence;
 
 import com.cocco.bootcamp.config.DataSource;
 import com.cocco.bootcamp.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,15 +16,24 @@ import java.text.SimpleDateFormat;
 /**
  * Created by santi on 19/1/2017.
  */
+@Component
 public class WeatherController {
-    private static DataSource dataSource = DataSource.getInstance();
+    //private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
+    //private static DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
+    private static DataSource dataSource;
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public static String addWeatherItems(Weather weather) throws SQLException {
         String message = "Nothing happened.";
         PreparedStatement insertTodayWeather = null;
         PreparedStatement insertWind = null;
         PreparedStatement insertAtmosphere = null;
-        Connection con = dataSource.openConnection();
+        dataSource.openConnection();
+        Connection con = dataSource.getCon();
         try {
             con.setAutoCommit(false);
             String insertTodayWeatherQuery = "insert into todayweather ("
@@ -97,7 +110,8 @@ public class WeatherController {
 
     public static String addWeather(Weather weather, int stateID) {
         String message = "Nothing happened.";
-        Connection con = dataSource.openConnection();
+        dataSource.openConnection();
+        Connection con = dataSource.getCon();
         int idTodayWeather;
         int idWind;
         int idAtmosphere;
@@ -157,7 +171,8 @@ public class WeatherController {
 
     public static String addForecasts (Weather weather) {
         String message = "Nothing happened.";
-        Connection con = dataSource.openConnection();
+        dataSource.openConnection();
+        Connection con = dataSource.getCon();
         int idWeather;
         String query = "select"
                 + " id_weather"
@@ -202,7 +217,8 @@ public class WeatherController {
 
     public static Weather getWeatherData(int stateID) {
         Weather weather = null;
-        Connection con = dataSource.openConnection();
+        dataSource.openConnection();
+        Connection con = dataSource.getCon();
         String query = "select"
                 + " id_weather,"
                 + " todayweather_date,"

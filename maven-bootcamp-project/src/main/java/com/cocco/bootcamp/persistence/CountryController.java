@@ -2,6 +2,10 @@ package com.cocco.bootcamp.persistence;
 
 import com.cocco.bootcamp.config.DataSource;
 import com.cocco.bootcamp.domain.Country;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +16,16 @@ import java.util.List;
 /**
  * Created by santi on 18/1/2017.
  */
+@Component
 public class CountryController {
-    private static DataSource dataSource = DataSource.getInstance();
+    //private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
+    //private static DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
+    private static DataSource dataSource;
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public static String addCountry(String name, String countryID2, String countryID3) {
         if (countryID2.length() != 2 || countryID3.length() != 3) {
@@ -33,7 +45,8 @@ public class CountryController {
                     + " country_id3 ) values ("
                     + "?, ?, ?);";
             try {
-                PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+                dataSource.openConnection();
+                PreparedStatement statement = dataSource.getCon().prepareStatement(query);
                 statement.setString(1, name);
                 statement.setString(2, countryID2);
                 statement.setString(3, countryID3);
@@ -59,7 +72,8 @@ public class CountryController {
                 + " country_id2 = ?"
                 + " where country_id3 = ?;";
         try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            dataSource.openConnection();
+            PreparedStatement statement = dataSource.getCon().prepareStatement(query);
             statement.setString(1, name);
             statement.setString(2, countryID2);
             statement.setString(3, countryID3);
@@ -83,7 +97,8 @@ public class CountryController {
                 " from country" +
                 " where country_id3 = ?;";
         try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            dataSource.openConnection();
+            PreparedStatement statement = dataSource.getCon().prepareStatement(query);
             statement.setString(1, countryID3);
 
             ResultSet resultSet = statement.executeQuery();
@@ -106,7 +121,8 @@ public class CountryController {
                 + " country_id2,"
                 + " country_id3 from country;";
         try {
-            PreparedStatement statement = dataSource.openConnection().prepareStatement(query);
+            dataSource.openConnection();
+            PreparedStatement statement = dataSource.getCon().prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Country country = new Country();
