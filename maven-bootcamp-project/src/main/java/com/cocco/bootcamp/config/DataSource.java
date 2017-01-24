@@ -7,17 +7,20 @@ import java.sql.DriverManager;
  * Created by santi on 13/1/2017.
  */
 public class DataSource {
-    private static DataSource ourInstance = new DataSource();
     private Connection con;
 
-    public static DataSource getInstance() {
-        return ourInstance;
+    public DataSource(){
     }
 
-    private DataSource(){
+    public Connection getCon() {
+        return con;
     }
 
-    public Connection openConnection(){
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+
+    public void openConnection(){
         try {
             String userName = "root";
             String password = "1234";
@@ -27,7 +30,6 @@ public class DataSource {
         } catch (Exception e) {
             System.out.println("Connection error at opening. Message: " + e.getMessage());
         }
-        return con;
     }
 
     public void closeConnection(){
