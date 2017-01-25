@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
  * Created by santi on 19/1/2017.
  */
 @Component
-public class WeatherController {
+public class WeatherDAO {
     //private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
     //private static DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
     private static DataSource dataSource;

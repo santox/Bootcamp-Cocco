@@ -17,7 +17,7 @@ import java.util.List;
  * Created by santi on 19/1/2017.
  */
 @Component
-public class StateController {
+public class StateDAO {
     //private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
     //private static DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
     private static DataSource dataSource;

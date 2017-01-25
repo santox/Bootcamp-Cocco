@@ -2,13 +2,12 @@ package com.cocco.bootcamp.main;
 
 import com.cocco.bootcamp.config.*;
 import com.cocco.bootcamp.domain.*;
-import com.cocco.bootcamp.persistence.CountryController;
-import com.cocco.bootcamp.persistence.StateController;
-import com.cocco.bootcamp.persistence.WeatherController;
+import com.cocco.bootcamp.persistence.CountryDAO;
+import com.cocco.bootcamp.persistence.StateDAO;
+import com.cocco.bootcamp.persistence.WeatherDAO;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,11 +72,11 @@ public class Main {
                     */
 
                     System.out.println();
-                    System.out.println(CountryController.addCountry(name, countryID2, countryID3));
+                    System.out.println(CountryDAO.addCountry(name, countryID2, countryID3));
                     break;
                 case 2:
                     //Fetch countries from DataBase
-                    countries = CountryController.getCountries();
+                    countries = CountryDAO.getCountries();
 
                     //Displaying countries
                     System.out.println();
@@ -93,7 +92,7 @@ public class Main {
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String abbr = scanner.next();
-                    if (!CountryController.isAlreadyExists(abbr)) {
+                    if (!CountryDAO.isAlreadyExists(abbr)) {
                         System.out.println("Country does not exist.");
                         break;
                     }
@@ -129,14 +128,14 @@ public class Main {
                     selectedCountry.addState(state);*/
 
                     System.out.println();
-                    System.out.println(StateController.addState(abbr, stateName, stateAbbreviation, area, capital));
+                    System.out.println(StateDAO.addState(abbr, stateName, stateAbbreviation, area, capital));
                     break;
                 case 4:
                     //Selected country input
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String countryAbbr = scanner.next();
-                    if (!CountryController.isAlreadyExists(countryAbbr)) {
+                    if (!CountryDAO.isAlreadyExists(countryAbbr)) {
                         System.out.println("Country does not exist.");
                         break;
                     }
@@ -149,7 +148,7 @@ public class Main {
                     }
                     if (selecCountry == null) {break;}*/
 
-                    List<State> stateList = StateController.getStates(countryAbbr);
+                    List<State> stateList = StateDAO.getStates(countryAbbr);
                     //States output
                     System.out.println();
                     StringBuilder builder = new StringBuilder();
@@ -164,7 +163,7 @@ public class Main {
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String cAbbr = scanner.next();
-                    if (!CountryController.isAlreadyExists(cAbbr)) {
+                    if (!CountryDAO.isAlreadyExists(cAbbr)) {
                         System.out.println("Country does not exist.");
                         break;
                     }
@@ -181,7 +180,7 @@ public class Main {
                     System.out.println();
                     System.out.println("2 letter state abbreviation: ");
                     String stateAbbr = scanner.next();
-                    State selectedState = StateController.getState(cAbbr, stateAbbr);
+                    State selectedState = StateDAO.getState(cAbbr, stateAbbr);
                     if (selectedState == null) {
                         System.out.println("State does not exist.");
                         break;
@@ -265,9 +264,9 @@ public class Main {
                     }
 
                     try {
-                        WeatherController.addWeatherItems(weather);
-                        WeatherController.addWeather(weather, selectedState.getIdState());
-                        WeatherController.addForecasts(weather);
+                        WeatherDAO.addWeatherItems(weather);
+                        WeatherDAO.addWeather(weather, selectedState.getIdState());
+                        WeatherDAO.addForecasts(weather);
                     } catch (Exception e) {
                         System.out.println("Error message: " + e.getMessage());
                         break;
@@ -280,7 +279,7 @@ public class Main {
                     System.out.println();
                     System.out.println("3 letter country abbreviation: ");
                     String cAbb = scanner.next();
-                    if (!CountryController.isAlreadyExists(cAbb)) {
+                    if (!CountryDAO.isAlreadyExists(cAbb)) {
                         System.out.println("Country does not exist.");
                         break;
                     }
@@ -297,7 +296,7 @@ public class Main {
                     System.out.println();
                     System.out.println("2 letter state abbreviation: ");
                     String staAbbr = scanner.next();
-                    State sState = StateController.getState(cAbb, staAbbr);
+                    State sState = StateDAO.getState(cAbb, staAbbr);
                     if (sState == null) {
                         System.out.println("State does not exist.");
                         break;
@@ -312,7 +311,7 @@ public class Main {
                     if (seState == null) {break;}
                     System.out.println(seState.getWeather().toString());*/
 
-                    System.out.println(WeatherController.getWeatherData(sState.getIdState()).toString());
+                    System.out.println(WeatherDAO.getWeatherData(sState.getIdState()).toString());
                     break;
                 case 7:
                     exit = true;
