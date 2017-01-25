@@ -8,6 +8,8 @@
   <name>bootcamp-web Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <springframework.version>4.3.0.RELEASE</springframework.version>
     <jackson.library>2.7.5</jackson.library>
   </properties>
@@ -43,7 +45,6 @@
       <version>${jackson.library}</version>
     </dependency>
 
-
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
       <groupId>mysql</groupId>
@@ -60,16 +61,5 @@
   </dependencies>
   <build>
     <finalName>bootcamp-web</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>
