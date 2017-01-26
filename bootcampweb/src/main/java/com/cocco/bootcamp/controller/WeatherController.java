@@ -26,6 +26,16 @@ public class WeatherController {
         return WeatherDAO.getWeatherData(myState.getIdState());
     }
 
+    //EL REQUEST PARAM DA EXCEPCION (CURRENT REQUEST IS NOT A MULTIPART REQUEST)
+    @RequestMapping(value = "/weather", method = RequestMethod.GET, headers="Accept=application/json")
+    public Weather getWeather(@RequestParam(name = "country") String country) {
+        if (!CountryDAO.isAlreadyExists(country)) {
+            return null;
+        }
+        State myState = StateDAO.getState(country, "CO");
+        return WeatherDAO.getWeatherData(myState.getIdState());
+    }
+
     //ESTO SI FUNCIONA
     @RequestMapping(value = "/country", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<Country> getCountries() {
