@@ -6,6 +6,8 @@ import com.cocco.bootcamp.domain.Weather;
 import com.cocco.bootcamp.persistence.CountryDAO;
 import com.cocco.bootcamp.persistence.StateDAO;
 import com.cocco.bootcamp.persistence.WeatherDAO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,27 +18,18 @@ import java.util.List;
 @RestController
 public class WeatherController {
 
-    //LOS PATHVARIABLES NO FUNCIONAN
+
     @RequestMapping(value = "/weather/{country}/{state}", method = RequestMethod.GET, headers="Accept=application/json")
-    public Weather getWeather(@PathVariable("country") String country, @PathVariable("state") String state) {
+    public ResponseEntity<Weather> getWeather(@PathVariable(value = "country") String country, @PathVariable(value = "state") String state) {
         if (!CountryDAO.isAlreadyExists(country)) {
             return null;
         }
         State myState = StateDAO.getState(country, state);
-        return WeatherDAO.getWeatherData(myState.getIdState());
+        Weather weather = WeatherDAO.getWeatherData(myState.getIdState());
+        return new ResponseEntity<Weather>(weather, HttpStatus.OK);
     }
 
-    //EL REQUEST PARAM DA EXCEPCION (CURRENT REQUEST IS NOT A MULTIPART REQUEST)
-    @RequestMapping(value = "/weather", method = RequestMethod.GET, headers="Accept=application/json")
-    public Weather getWeather(@RequestParam(name = "country") String country) {
-        if (!CountryDAO.isAlreadyExists(country)) {
-            return null;
-        }
-        State myState = StateDAO.getState(country, "CO");
-        return WeatherDAO.getWeatherData(myState.getIdState());
-    }
 
-    //ESTO SI FUNCIONA
     @RequestMapping(value = "/country", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<Country> getCountries() {
         return CountryDAO.getCountries();
