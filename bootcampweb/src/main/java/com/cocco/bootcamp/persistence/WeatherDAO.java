@@ -221,11 +221,14 @@ public class WeatherDAO {
         Connection con = dataSource.getCon();
         String query = "select"
                 + " id_weather,"
+                + " todayweather.id_today_weather,"
                 + " todayweather_date,"
                 + " temperature,"
                 + " description,"
+                + " wind.id_wind,"
                 + " speed,"
                 + " direction,"
+                + " atmosphere.id_atmosphere,"
                 + " humidity,"
                 + " pressure,"
                 + " visibility,"
@@ -246,13 +249,16 @@ public class WeatherDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 TodayWeather tw = new TodayWeather();
+                tw.setIdTodayWeather(resultSet.getInt("todayweather.id_today_weather"));
                 tw.setDate(resultSet.getDate("todayweather_date"));
                 tw.setTemperature(resultSet.getInt("temperature"));
                 tw.setDescription(resultSet.getString("description"));
                 Wind w = new Wind();
+                w.setIdWind(resultSet.getInt("wind.id_wind"));
                 w.setWindSpeed(resultSet.getInt("speed"));
                 w.setWindDirection(resultSet.getInt("direction"));
                 Atmosphere a = new Atmosphere();
+                a.setidAtmosphere(resultSet.getInt("atmosphere.id_atmosphere"));
                 a.setHumidity(resultSet.getInt("humidity"));
                 a.setPressure(resultSet.getFloat("pressure"));
                 a.setVisibility(resultSet.getFloat("visibility"));
@@ -278,6 +284,7 @@ public class WeatherDAO {
                 for (int i = 0; i < 10; i++) {
                     if (resultSet.next()) {
                         weather.getForecasts()[i] = new Forecast();
+                        weather.getForecasts()[i].setIdForecast(resultSet.getInt("id_forecast"));
                         weather.getForecasts()[i].setDate(resultSet.getDate("forecast_date"));
                         weather.getForecasts()[i].setDay(resultSet.getString("forecast_day"));
                         weather.getForecasts()[i].setHigh(resultSet.getInt("high"));

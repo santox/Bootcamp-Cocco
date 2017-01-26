@@ -55,7 +55,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>bootcamp-web</finalName>
+    <finalName>bootcampweb</finalName>
     <plugins>
       <!-- For Maven Tomcat Plugin -->
       <plugin>
@@ -63,7 +63,7 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <path>/CounterWebApp</path>
+          <path>/bootcampweb</path>
         </configuration>
       </plugin>
     </plugins>
