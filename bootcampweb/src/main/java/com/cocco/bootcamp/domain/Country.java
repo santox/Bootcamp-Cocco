@@ -26,6 +26,13 @@ public class Country {
         this.states = states;
     }
 
+    public Country(String name, String countryID2, String countryID3) {
+        this.name = name;
+        this.countryID2 = countryID2;
+        this.countryID3 = countryID3;
+        this.states = new ArrayList<State>();
+    }
+
     public String getName() {
         return name;
     }

@@ -1,5 +1,7 @@
 package com.cocco.bootcamp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -7,6 +9,7 @@ import java.util.Date;
  */
 public class Forecast {
     private int idForecast;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
     private String day;
     private int high;

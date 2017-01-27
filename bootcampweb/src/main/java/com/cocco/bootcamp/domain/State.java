@@ -19,7 +19,7 @@ public class State {
         abbreviation = "";
         area = -1;
         capital = "";
-        weather = new Weather();
+        weather = null;
     }
 
     public State(int idState, String countryID3, String name,
