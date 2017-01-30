@@ -18,22 +18,22 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idWeather;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idTodayWeather")
     private TodayWeather todayWeather;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idWind")
     private Wind wind;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAtmosphere")
     private Atmosphere atmosphere;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "weather")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "weather")
     private List<Forecast> forecasts;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "idState")
     private State state;
 

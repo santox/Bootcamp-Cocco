@@ -21,7 +21,7 @@ public class State {
     private String abbreviation;
     private long area;
     private String capital;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "idCountry")
     private Country country;
 
