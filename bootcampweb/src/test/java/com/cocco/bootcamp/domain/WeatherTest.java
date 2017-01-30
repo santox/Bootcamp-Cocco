@@ -7,6 +7,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.List;
+
 /**
  * Created by santi on 20/1/2017.
  */
@@ -92,16 +94,16 @@ public class WeatherTest extends TestCase{
         WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
         weatherBuilder.buildTodayWeather();
         weatherBuilder.buildForecasts();
-        Forecast[] expectedResult = weatherBuilder.getWeather().getForecasts();
-        Forecast[] result = weather.getForecasts();
+        List<Forecast> expectedResult = weatherBuilder.getWeather().getForecasts();
+        List<Forecast> result = weather.getForecasts();
         boolean isTheSame = false;
-        for (int i = 0; i < result.length; i++) {
-            if (result[i].getIdForecast() == expectedResult[i].getIdForecast()) {
-                if (result[i].getDate().toString().equalsIgnoreCase(expectedResult[i].getDate().toString())) {
-                    if (result[i].getDay().equalsIgnoreCase(expectedResult[i].getDay())) {
-                        if (result[i].getHigh() == expectedResult[i].getHigh()) {
-                            if (result[i].getLow() == expectedResult[i].getLow()) {
-                                if (result[i].getText().equalsIgnoreCase(expectedResult[i].getText())) {
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i).getIdForecast() == expectedResult.get(i).getIdForecast()) {
+                if (result.get(i).getDate().toString().equalsIgnoreCase(expectedResult.get(i).getDate().toString())) {
+                    if (result.get(i).getDay().equalsIgnoreCase(expectedResult.get(i).getDay())) {
+                        if (result.get(i).getHigh() == expectedResult.get(i).getHigh()) {
+                            if (result.get(i).getLow() == expectedResult.get(i).getLow()) {
+                                if (result.get(i).getText().equalsIgnoreCase(expectedResult.get(i).getText())) {
                                     isTheSame = true;
                                 }
                             }

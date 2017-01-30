@@ -1,36 +1,43 @@
 package com.cocco.bootcamp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by santi on 11/1/2017.
  */
+@Entity
+@Table(name = "countries")
 public class Country {
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idCountry;
     private String name;
+    @Column(length = 2)
     private String countryID2;
+    @Column(length = 3)
     private String countryID3;
-    private List<State> states;
 
     public Country() {
-        name = "";
-        countryID2 = "";
-        countryID3 = "";
-        states = new ArrayList<State>();
     }
 
-    public Country(String name, String countryID2, String countryID3, List<State> states) {
+    public Country(int idCountry, String name, String countryID2, String countryID3) {
+        this.idCountry = idCountry;
         this.name = name;
         this.countryID2 = countryID2;
         this.countryID3 = countryID3;
-        this.states = states;
     }
 
-    public Country(String name, String countryID2, String countryID3) {
-        this.name = name;
-        this.countryID2 = countryID2;
-        this.countryID3 = countryID3;
-        this.states = new ArrayList<State>();
+    public int getIdCountry() {
+        return idCountry;
+    }
+
+    public void setIdCountry(int idCountry) {
+        this.idCountry = idCountry;
     }
 
     public String getName() {
@@ -57,29 +64,13 @@ public class Country {
         this.countryID3 = countryID3;
     }
 
-    public List<State> getStates() {
-        return states;
-    }
-
-    public void setStates(List<State> states) {
-        this.states = states;
-    }
-
-    public void addState(State state){
-        this.states.add(state);
-    }
-
     @Override
     public String toString() {
-        /*String allStates = "{";
-        for(State state : states){allStates += "\r\n" + state.toString() + '\'';}
-        allStates += '}';
-        */
         return "Country{" +
-                "\r\nName='" + name + '\'' +
-                ", \r\n2 letter abbreviation='" + countryID2 + '\'' +
-                ", \r\n3 letter abbreviation='" + countryID3 + '\'' +
-                //", \r\nStates=" + allStates +
+                "\r\nidCountry=" + idCountry +
+                ", \r\nname='" + name + '\'' +
+                ", \r\ncountryID2='" + countryID2 + '\'' +
+                ", \r\ncountryID3='" + countryID3 + '\'' +
                 '}';
     }
 }

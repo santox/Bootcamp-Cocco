@@ -46,7 +46,7 @@ public class CountryTest extends TestCase{
         String result = country.getCountryID3();
         assertEquals("field wasn't retrieved properly", expectedResult, result);
     }
-
+    /*
     public void testGetStates() throws Exception {
         List<State> expectedResult = new ArrayList<State>();
         StateBuilder stateBuilder = new CordobaStateBuilder();
@@ -73,4 +73,5 @@ public class CountryTest extends TestCase{
         }
         assertTrue("field wasn't retrieved properly", isTheSame);
     }
+    */
 }

@@ -9,6 +9,6 @@ public interface CountryBuilder {
     public void buildName();
     public void buildCountryID2();
     public void buildCountryId3();
-    public void buildStates();
+    //public void buildStates();
     public Country getCountry();
 }

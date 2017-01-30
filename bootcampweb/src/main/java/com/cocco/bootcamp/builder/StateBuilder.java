@@ -12,6 +12,6 @@ public interface StateBuilder {
     public void buildAbbreviation();
     public void buildArea();
     public void buildCapital();
-    public void buildWeather();
+    //public void buildWeather();
     public State getState();
 }

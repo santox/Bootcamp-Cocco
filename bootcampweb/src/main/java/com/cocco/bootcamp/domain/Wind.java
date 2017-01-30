@@ -1,9 +1,18 @@
 package com.cocco.bootcamp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
 /**
  * Created by santi on 11/1/2017.
  */
+@Entity
+@Table(name = "winds")
 public class Wind {
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idWind;
     private int windSpeed;
     private int windDirection;

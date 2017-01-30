@@ -62,7 +62,7 @@ public class CordobaWeatherBuilder implements WeatherBuilder{
             f.setHigh(60 + i);
             f.setLow(40 + i);
             f.setText("Forecast for Cordoba " + myDate);
-            weather.getForecasts()[i] = f;
+            weather.getForecasts().add(f);
         }
     }
 

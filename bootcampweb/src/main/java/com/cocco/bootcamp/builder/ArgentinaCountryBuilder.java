@@ -25,6 +25,7 @@ public class ArgentinaCountryBuilder implements CountryBuilder{
         country.setCountryID3("ARG");
     }
 
+    /*
     public void buildStates() {
         StateBuilder stateBuilder = new CordobaStateBuilder();
         StateDirector stateDirector = new StateDirector(stateBuilder);
@@ -32,6 +33,7 @@ public class ArgentinaCountryBuilder implements CountryBuilder{
         State state = stateDirector.getState();
         country.getStates().add(state);
     }
+    */
 
     public Country getCountry() {
         return country;

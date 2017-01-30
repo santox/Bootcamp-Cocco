@@ -37,6 +37,7 @@ public class CordobaStateBuilder implements StateBuilder{
         state.setCapital("Cordoba");
     }
 
+    /*
     public void buildWeather() {
         WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
         WeatherDirector weatherDirector = new WeatherDirector(weatherBuilder);
@@ -44,6 +45,7 @@ public class CordobaStateBuilder implements StateBuilder{
         Weather weather = weatherDirector.getWeather();
         state.setWeather(weather);
     }
+    */
 
     public State getState() {
         return state;

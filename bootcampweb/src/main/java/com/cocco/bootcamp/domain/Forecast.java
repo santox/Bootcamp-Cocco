@@ -1,13 +1,20 @@
 package com.cocco.bootcamp.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by santi on 12/1/2017.
  */
+@Entity
+@Table(name = "forecasts")
 public class Forecast {
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idForecast;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
@@ -16,6 +23,10 @@ public class Forecast {
     private int low;
     private String text;
 
+    @JoinColumn(name = "idWeather", referencedColumnName = "idWeather")
+    @ManyToOne()
+    private Weather weather;
+
     public Forecast() {
         idForecast = -1;
         date = null;
@@ -23,15 +34,25 @@ public class Forecast {
         high = 9999;
         low = 9999;
         text = "";
+        weather = null;
     }
 
-    public Forecast(int idForecast, Date date, String day, int high, int low, String text) {
+    public Forecast(int idForecast, Date date, String day, int high, int low, String text, Weather weather) {
         this.idForecast = idForecast;
         this.date = date;
         this.day = day;
         this.high = high;
         this.low = low;
         this.text = text;
+        this.weather = weather;
+    }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
     }
 
     public int getIdForecast() {

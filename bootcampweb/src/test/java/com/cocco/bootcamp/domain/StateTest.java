@@ -61,6 +61,7 @@ public class StateTest extends TestCase{
         assertEquals("field wasn't retrieved properly", expectedResult, result);
     }
 
+    /*
     public void testGetWeather() throws Exception {
         WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
         WeatherDirector weatherDirector = new WeatherDirector(weatherBuilder);
@@ -81,4 +82,5 @@ public class StateTest extends TestCase{
         }
         assertTrue("field wasn't retrieved properly", isTheSame);
     }
+    */
 }

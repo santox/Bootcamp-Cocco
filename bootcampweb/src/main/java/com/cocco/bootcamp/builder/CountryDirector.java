@@ -16,7 +16,7 @@ public class CountryDirector {
         countryBuilder.buildName();
         countryBuilder.buildCountryID2();
         countryBuilder.buildCountryId3();
-        countryBuilder.buildStates();
+        //countryBuilder.buildStates();
     }
 
     public Country getCountry() {

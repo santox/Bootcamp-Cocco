@@ -1,13 +1,20 @@
 package com.cocco.bootcamp.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by santi on 11/1/2017.
  */
+@Entity
+@Table(name = "todayweather")
 public class TodayWeather {
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idTodayWeather;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;

@@ -19,7 +19,7 @@ public class StateDirector {
         stateBuilder.buildAbbreviation();
         stateBuilder.buildArea();
         stateBuilder.buildCapital();
-        stateBuilder.buildWeather();
+        //stateBuilder.buildWeather();
     }
 
     public State getState() {

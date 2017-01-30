@@ -1,9 +1,18 @@
 package com.cocco.bootcamp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
 /**
  * Created by santi on 11/1/2017.
  */
+@Entity
+@Table(name = "atmospheres")
 public class Atmosphere {
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAtmosphere;
     private int humidity;
     private float pressure;

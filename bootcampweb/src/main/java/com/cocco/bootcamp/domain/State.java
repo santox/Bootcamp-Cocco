@@ -1,36 +1,41 @@
 package com.cocco.bootcamp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
 /**
  * Created by santi on 11/1/2017.
  */
+@Entity
+@Table(name = "states")
 public class State {
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idState;
+    @Column(length = 3)
     private String countryID3;
     private String name;
+    @Column(length = 2)
     private String abbreviation;
     private long area;
     private String capital;
-    private Weather weather;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "idCountry")
+    private Country country;
 
     public State() {
-        idState = -1;
-        countryID3 = "";
-        name = "";
-        abbreviation = "";
-        area = -1;
-        capital = "";
-        weather = null;
     }
 
-    public State(int idState, String countryID3, String name,
-                 String abbreviation, long area, String capital, Weather weather) {
+    public State(int idState, String countryID3, String name, String abbreviation, long area, String capital, Country country) {
         this.idState = idState;
         this.countryID3 = countryID3;
         this.name = name;
         this.abbreviation = abbreviation;
         this.area = area;
         this.capital = capital;
-        this.weather = weather;
+        this.country = country;
     }
 
     public int getIdState() {
@@ -81,23 +86,24 @@ public class State {
         this.capital = capital;
     }
 
-    public Weather getWeather() {
-        return weather;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setWeather(Weather weather) {
-        this.weather = weather;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     @Override
     public String toString() {
         return "State{" +
-                "\r\nCountry='" + countryID3 + '\'' +
-                ", \r\nName='" + name + '\'' +
-                ", \r\nAbbreviation='" + abbreviation + '\'' +
-                ", \r\nArea=" + area + "KM" +
-                ", \r\nCapital='" + capital + '\'' +
-                //", \r\nWeather=" + weather +
+                "idState=" + idState +
+                ", \r\ncountryID3='" + countryID3 + '\'' +
+                ", \r\nname='" + name + '\'' +
+                ", \r\nabbreviation='" + abbreviation + '\'' +
+                ", \r\narea=" + area +
+                ", \r\ncapital='" + capital + '\'' +
+                ", \r\ncountry=" + country +
                 '}';
     }
 }
