@@ -23,6 +23,7 @@ public class Forecast {
     private int low;
     private String text;
 
+    @JsonIgnore
     @JoinColumn(name = "idWeather", referencedColumnName = "idWeather")
     @ManyToOne()
     private Weather weather;

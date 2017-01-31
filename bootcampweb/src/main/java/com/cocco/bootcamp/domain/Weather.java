@@ -3,9 +3,6 @@ package com.cocco.bootcamp.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by santi on 11/1/2017.
@@ -18,41 +15,32 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idWeather;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "idTodayWeather")
     private TodayWeather todayWeather;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "idWind")
     private Wind wind;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "idAtmosphere")
     private Atmosphere atmosphere;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "weather")
-    private List<Forecast> forecasts;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idState")
     private State state;
 
     public Weather() {
-        idWeather = -1;
-        todayWeather = new TodayWeather();
-        wind = new Wind();
-        atmosphere = new Atmosphere();
-        forecasts = new ArrayList<>();
-        state = new State();
+
     }
 
-    public Weather(int idWeather, TodayWeather todayWeather,
-                   Wind wind, Atmosphere atmosphere, List<Forecast> forecasts, State state) {
+    public Weather(TodayWeather todayWeather, Wind wind, Atmosphere atmosphere, State state) {
         this.idWeather = idWeather;
         this.todayWeather = todayWeather;
         this.wind = wind;
         this.atmosphere = atmosphere;
-        this.forecasts = forecasts;
         this.state = state;
     }
 
@@ -96,13 +84,6 @@ public class Weather {
         this.atmosphere = atmosphere;
     }
 
-    public List<Forecast> getForecasts() {
-        return forecasts;
-    }
-
-    public void setForecasts(List<Forecast> forecasts) {
-        this.forecasts = forecasts;
-    }
 
     @Override
     public String toString() {
@@ -111,7 +92,6 @@ public class Weather {
                 ", \r\ntodayWeather=" + todayWeather +
                 ", \r\nwind=" + wind +
                 ", \r\natmosphere=" + atmosphere +
-                ", \r\nforecasts=" + forecasts +
                 ", \r\nstate=" + state +
                 '}';
     }

@@ -10,6 +10,5 @@ public interface WeatherBuilder {
     public void buildTodayWeather();
     public void buildWind();
     public void buildAtmosphere();
-    public void buildForecasts();
     public Weather getWeather();
 }

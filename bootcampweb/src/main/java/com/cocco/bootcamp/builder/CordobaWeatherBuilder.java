@@ -48,24 +48,6 @@ public class CordobaWeatherBuilder implements WeatherBuilder{
         weather.setAtmosphere(a);
     }
 
-    public void buildForecasts() {
-        Date sourceDate = weather.getTodayWeather().getDate();
-        Date myDate;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE");
-        for (int i = 0; i < 10; i++) {
-            myDate = DateUtil.addDays(sourceDate, i);
-            String dayOfWeek = dateFormat.format(myDate);
-            Forecast f = new Forecast();
-            f.setIdForecast(i);
-            f.setDate(myDate);
-            f.setDay(dayOfWeek);
-            f.setHigh(60 + i);
-            f.setLow(40 + i);
-            f.setText("Forecast for Cordoba " + myDate);
-            weather.getForecasts().add(f);
-        }
-    }
-
     public Weather getWeather() {
         return weather;
     }
