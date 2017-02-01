@@ -1,6 +1,7 @@
 package com.cocco.bootcamp.controller;
 
 import com.cocco.bootcamp.domain.Country;
+import com.cocco.bootcamp.proxy.RestProxy;
 import com.cocco.bootcamp.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,12 @@ import java.util.List;
 @RestController
 public class CountryController {
     private CountryRepository countryRepository;
+    private RestProxy restProxy;
+
+    @Autowired
+    public void setRestProxy(RestProxy restProxy) {
+        this.restProxy = restProxy;
+    }
 
     @Autowired
     public void setCountryRepository(CountryRepository countryRepository) {
@@ -27,9 +34,12 @@ public class CountryController {
 
     @RequestMapping(value = "/country", method = RequestMethod.GET, headers = "Accept=application/json")
     public ResponseEntity<List<Country>> getCountries() {
+        /*
         List<Country> countries = new ArrayList<>();
         countryRepository.findAll().forEach(countries::add);
         return new ResponseEntity<>(countries, HttpStatus.OK);
+        */
+        return new ResponseEntity<>(restProxy.getCountries(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/country/add", method = RequestMethod.POST)
