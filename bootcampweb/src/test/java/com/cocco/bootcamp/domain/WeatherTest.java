@@ -1,13 +1,11 @@
 package com.cocco.bootcamp.domain;
 
-import com.cocco.bootcamp.builder.CordobaWeatherBuilder;
-import com.cocco.bootcamp.builder.WeatherBuilder;
+import com.cocco.bootcamp.builder.CordobaDefaultWeatherBuilder;
+import com.cocco.bootcamp.builder.DefaultWeatherBuilder;
 import com.cocco.bootcamp.builder.WeatherDirector;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.List;
 
 /**
  * Created by santi on 20/1/2017.
@@ -16,8 +14,8 @@ public class WeatherTest extends TestCase{
     private Weather weather;
 
     public void setUp() throws Exception {
-        WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
-        WeatherDirector weatherDirector = new WeatherDirector(weatherBuilder);
+        DefaultWeatherBuilder defaultWeatherBuilder = new CordobaDefaultWeatherBuilder();
+        WeatherDirector weatherDirector = new WeatherDirector(defaultWeatherBuilder);
         weatherDirector.constructWeather();
         weather = weatherDirector.getWeather();
     }
@@ -37,9 +35,9 @@ public class WeatherTest extends TestCase{
     }
 
     public void testGetTodayWeather() throws Exception {
-        WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
-        weatherBuilder.buildTodayWeather();
-        TodayWeather expectedResult = weatherBuilder.getWeather().getTodayWeather();
+        DefaultWeatherBuilder defaultWeatherBuilder = new CordobaDefaultWeatherBuilder();
+        defaultWeatherBuilder.buildTodayWeather();
+        TodayWeather expectedResult = defaultWeatherBuilder.getWeather().getTodayWeather();
         TodayWeather result = weather.getTodayWeather();
         boolean isTheSame = false;
         if (result.getIdTodayWeather() == expectedResult.getIdTodayWeather()) {
@@ -55,9 +53,9 @@ public class WeatherTest extends TestCase{
     }
 
     public void testGetWind() throws Exception {
-        WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
-        weatherBuilder.buildWind();
-        Wind expectedResult = weatherBuilder.getWeather().getWind();
+        DefaultWeatherBuilder defaultWeatherBuilder = new CordobaDefaultWeatherBuilder();
+        defaultWeatherBuilder.buildWind();
+        Wind expectedResult = defaultWeatherBuilder.getWeather().getWind();
         Wind result = weather.getWind();
         boolean isTheSame = false;
         if (result.getIdWind() == expectedResult.getIdWind()) {
@@ -71,9 +69,9 @@ public class WeatherTest extends TestCase{
     }
 
     public void testGetAtmosphere() throws Exception {
-        WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
-        weatherBuilder.buildAtmosphere();
-        Atmosphere expectedResult = weatherBuilder.getWeather().getAtmosphere();
+        DefaultWeatherBuilder defaultWeatherBuilder = new CordobaDefaultWeatherBuilder();
+        defaultWeatherBuilder.buildAtmosphere();
+        Atmosphere expectedResult = defaultWeatherBuilder.getWeather().getAtmosphere();
         Atmosphere result = weather.getAtmosphere();
         boolean isTheSame = false;
         if (result.getidAtmosphere() == expectedResult.getidAtmosphere()) {

@@ -1,15 +1,14 @@
 package com.cocco.bootcamp.builder;
 
 import com.cocco.bootcamp.domain.State;
-import com.cocco.bootcamp.domain.Weather;
 
 /**
  * Created by santi on 19/1/2017.
  */
-public class CordobaStateBuilder implements StateBuilder{
+public class CordobaDefaultStateBuilder implements DefaultStateBuilder {
     private State state;
 
-    public CordobaStateBuilder() {
+    public CordobaDefaultStateBuilder() {
         state = new State();
     }
 
@@ -36,16 +35,6 @@ public class CordobaStateBuilder implements StateBuilder{
     public void buildCapital() {
         state.setCapital("Cordoba");
     }
-
-    /*
-    public void buildWeather() {
-        WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
-        WeatherDirector weatherDirector = new WeatherDirector(weatherBuilder);
-        weatherDirector.constructWeather();
-        Weather weather = weatherDirector.getWeather();
-        state.setWeather(weather);
-    }
-    */
 
     public State getState() {
         return state;

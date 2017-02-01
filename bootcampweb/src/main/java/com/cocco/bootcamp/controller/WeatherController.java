@@ -1,5 +1,6 @@
 package com.cocco.bootcamp.controller;
 
+import com.cocco.bootcamp.builder.WeatherBuilder;
 import com.cocco.bootcamp.domain.*;
 import com.cocco.bootcamp.dto.WeatherDTO;
 import com.cocco.bootcamp.repository.*;
@@ -101,13 +102,17 @@ public class WeatherController {
         weatherDTO.setAtmosphere(atmosphereRepository.save(weatherDTO.getAtmosphere()));
         weatherDTO.setWind(windRepository.save(weatherDTO.getWind()));
         weatherDTO.setTodayWeather(todayWeatherRepository.save(weatherDTO.getTodayWeather()));
-        Weather weather = new Weather(weatherDTO.getTodayWeather(), weatherDTO.getWind(), weatherDTO.getAtmosphere(), weatherDTO.getState());
+        WeatherBuilder wb = new WeatherBuilder();
+        wb.buildState(weatherDTO.getState())
+                .buildAtmosphere(weatherDTO.getAtmosphere())
+                .buildWind(weatherDTO.getWind())
+                .buildTodayWeather(weatherDTO.getTodayWeather());
+        Weather weather = wb.getWeather();
         weather = weatherRepository.save(weather);
         for (Forecast f : weatherDTO.getForecasts()) {
             f.setWeather(weather);
         }
         forecastRepository.save(weatherDTO.getForecasts());
-
         return new ResponseEntity<>(state + " weather data added succesfully!", HttpStatus.CREATED);
     }
 

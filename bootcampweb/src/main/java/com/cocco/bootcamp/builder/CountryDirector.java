@@ -6,20 +6,19 @@ import com.cocco.bootcamp.domain.Country;
  * Created by santi on 19/1/2017.
  */
 public class CountryDirector {
-    private CountryBuilder countryBuilder = null;
+    private DefaultCountryBuilder defaultCountryBuilder = null;
 
-    public CountryDirector(CountryBuilder countryBuilder) {
-        this.countryBuilder = countryBuilder;
+    public CountryDirector(DefaultCountryBuilder defaultCountryBuilder) {
+        this.defaultCountryBuilder = defaultCountryBuilder;
     }
 
     public void constructCountry() {
-        countryBuilder.buildName();
-        countryBuilder.buildCountryID2();
-        countryBuilder.buildCountryId3();
-        //countryBuilder.buildStates();
+        defaultCountryBuilder.buildName();
+        defaultCountryBuilder.buildCountryID2();
+        defaultCountryBuilder.buildCountryId3();
     }
 
     public Country getCountry() {
-        return countryBuilder.getCountry();
+        return defaultCountryBuilder.getCountry();
     }
 }

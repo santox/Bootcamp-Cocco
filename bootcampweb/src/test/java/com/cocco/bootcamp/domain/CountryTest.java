@@ -5,9 +5,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by santi on 20/1/2017.
  */
@@ -15,8 +12,8 @@ public class CountryTest extends TestCase{
     private Country country;
 
     public void setUp() throws Exception {
-        CountryBuilder countryBuilder = new ArgentinaCountryBuilder();
-        CountryDirector countryDirector = new CountryDirector(countryBuilder);
+        DefaultCountryBuilder defaultCountryBuilder = new ArgentinaDefaultCountryBuilder();
+        CountryDirector countryDirector = new CountryDirector(defaultCountryBuilder);
         countryDirector.constructCountry();
         country = countryDirector.getCountry();
     }
@@ -49,7 +46,7 @@ public class CountryTest extends TestCase{
     /*
     public void testGetStates() throws Exception {
         List<State> expectedResult = new ArrayList<State>();
-        StateBuilder stateBuilder = new CordobaStateBuilder();
+        DefaultStateBuilder stateBuilder = new CordobaDefaultStateBuilder();
         StateDirector stateDirector = new StateDirector(stateBuilder);
         stateDirector.constructState(country.getCountryID3());
         State state = stateDirector.getState();

@@ -1,18 +1,16 @@
 package com.cocco.bootcamp.builder;
 
 import com.cocco.bootcamp.domain.*;
-import com.cocco.bootcamp.main.DateUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by santi on 19/1/2017.
  */
-public class CordobaWeatherBuilder implements WeatherBuilder{
+public class CordobaDefaultWeatherBuilder implements DefaultWeatherBuilder {
     private Weather weather;
 
-    public CordobaWeatherBuilder() {
+    public CordobaDefaultWeatherBuilder() {
         weather = new Weather();
     }
 

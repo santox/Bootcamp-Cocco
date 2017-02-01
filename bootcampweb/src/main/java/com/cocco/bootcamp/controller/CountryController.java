@@ -29,12 +29,12 @@ public class CountryController {
     public ResponseEntity<List<Country>> getCountries() {
         List<Country> countries = new ArrayList<>();
         countryRepository.findAll().forEach(countries::add);
-        return new ResponseEntity<List<Country>>(countries, HttpStatus.OK);
+        return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/country/add", method = RequestMethod.POST)
     public ResponseEntity<String> addCountry(@RequestBody Country country) {
         countryRepository.save(country);
-        return new ResponseEntity<String>(country.getName() + " added succesfully!", HttpStatus.CREATED);
+        return new ResponseEntity<>(country.getName() + " added succesfully!", HttpStatus.CREATED);
     }
 }

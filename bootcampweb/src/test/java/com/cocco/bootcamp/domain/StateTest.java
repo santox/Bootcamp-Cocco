@@ -12,8 +12,8 @@ public class StateTest extends TestCase{
     private State state;
 
     public void setUp() throws Exception {
-        StateBuilder stateBuilder = new CordobaStateBuilder();
-        StateDirector stateDirector = new StateDirector(stateBuilder);
+        DefaultStateBuilder defaultStateBuilder = new CordobaDefaultStateBuilder();
+        StateDirector stateDirector = new StateDirector(defaultStateBuilder);
         stateDirector.constructState("ARG");
         state = stateDirector.getState();
     }
@@ -63,7 +63,7 @@ public class StateTest extends TestCase{
 
     /*
     public void testGetWeather() throws Exception {
-        WeatherBuilder weatherBuilder = new CordobaWeatherBuilder();
+        DefaultWeatherBuilder weatherBuilder = new CordobaDefaultWeatherBuilder();
         WeatherDirector weatherDirector = new WeatherDirector(weatherBuilder);
         weatherDirector.constructWeather();
         Weather expectedResult = weatherDirector.getWeather();

@@ -6,23 +6,22 @@ import com.cocco.bootcamp.domain.State;
  * Created by santi on 19/1/2017.
  */
 public class StateDirector {
-    private StateBuilder stateBuilder = null;
+    private DefaultStateBuilder defaultStateBuilder = null;
 
-    public StateDirector(StateBuilder stateBuilder) {
-        this.stateBuilder = stateBuilder;
+    public StateDirector(DefaultStateBuilder defaultStateBuilder) {
+        this.defaultStateBuilder = defaultStateBuilder;
     }
 
     public void constructState(String existingCountryID3) {
-        stateBuilder.buildIdState();
-        stateBuilder.buildCountryID3(existingCountryID3);
-        stateBuilder.buildName();
-        stateBuilder.buildAbbreviation();
-        stateBuilder.buildArea();
-        stateBuilder.buildCapital();
-        //stateBuilder.buildWeather();
+        defaultStateBuilder.buildIdState();
+        defaultStateBuilder.buildCountryID3(existingCountryID3);
+        defaultStateBuilder.buildName();
+        defaultStateBuilder.buildAbbreviation();
+        defaultStateBuilder.buildArea();
+        defaultStateBuilder.buildCapital();
     }
 
     public State getState() {
-        return stateBuilder.getState();
+        return defaultStateBuilder.getState();
     }
 }

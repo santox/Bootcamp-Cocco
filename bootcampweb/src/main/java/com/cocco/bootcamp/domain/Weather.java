@@ -33,11 +33,9 @@ public class Weather {
     private State state;
 
     public Weather() {
-
     }
 
     public Weather(TodayWeather todayWeather, Wind wind, Atmosphere atmosphere, State state) {
-        this.idWeather = idWeather;
         this.todayWeather = todayWeather;
         this.wind = wind;
         this.atmosphere = atmosphere;
@@ -83,7 +81,6 @@ public class Weather {
     public void setAtmosphere(Atmosphere atmosphere) {
         this.atmosphere = atmosphere;
     }
-
 
     @Override
     public String toString() {

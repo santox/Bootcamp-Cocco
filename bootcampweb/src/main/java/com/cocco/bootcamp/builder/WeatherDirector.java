@@ -6,20 +6,20 @@ import com.cocco.bootcamp.domain.Weather;
  * Created by santi on 19/1/2017.
  */
 public class WeatherDirector {
-    private WeatherBuilder weatherBuilder = null;
+    private DefaultWeatherBuilder defaultWeatherBuilder = null;
 
-    public WeatherDirector(WeatherBuilder weatherBuilder) {
-        this.weatherBuilder = weatherBuilder;
+    public WeatherDirector(DefaultWeatherBuilder defaultWeatherBuilder) {
+        this.defaultWeatherBuilder = defaultWeatherBuilder;
     }
 
     public void constructWeather() {
-        weatherBuilder.buildIdWeather();
-        weatherBuilder.buildTodayWeather();
-        weatherBuilder.buildWind();
-        weatherBuilder.buildAtmosphere();
+        defaultWeatherBuilder.buildIdWeather();
+        defaultWeatherBuilder.buildTodayWeather();
+        defaultWeatherBuilder.buildWind();
+        defaultWeatherBuilder.buildAtmosphere();
     }
 
     public Weather getWeather() {
-        return weatherBuilder.getWeather();
+        return defaultWeatherBuilder.getWeather();
     }
 }
