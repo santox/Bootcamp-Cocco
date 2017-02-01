@@ -6,7 +6,12 @@ import com.cocco.bootcamp.domain.*;
  * Created by santi on 1/2/2017.
  */
 public class WeatherBuilder {
-    private Weather weather = new Weather();
+    private Weather weather;
+
+    public WeatherBuilder newWeather() {
+        weather = new Weather();
+        return this;
+    }
 
     public WeatherBuilder buildIdWeather(int idWeather) {
         weather.setIdWeather(idWeather);

@@ -3,8 +3,6 @@ package com.cocco.bootcamp.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by santi on 11/1/2017.

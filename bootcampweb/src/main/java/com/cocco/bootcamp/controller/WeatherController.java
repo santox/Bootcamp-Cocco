@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,12 +101,13 @@ public class WeatherController {
         weatherDTO.setAtmosphere(atmosphereRepository.save(weatherDTO.getAtmosphere()));
         weatherDTO.setWind(windRepository.save(weatherDTO.getWind()));
         weatherDTO.setTodayWeather(todayWeatherRepository.save(weatherDTO.getTodayWeather()));
-        WeatherBuilder wb = new WeatherBuilder();
-        wb.buildState(weatherDTO.getState())
+        WeatherBuilder weatherBuilder = new WeatherBuilder();
+        weatherBuilder.newWeather()
+                .buildState(weatherDTO.getState())
                 .buildAtmosphere(weatherDTO.getAtmosphere())
                 .buildWind(weatherDTO.getWind())
                 .buildTodayWeather(weatherDTO.getTodayWeather());
-        Weather weather = wb.getWeather();
+        Weather weather = weatherBuilder.getWeather();
         weather = weatherRepository.save(weather);
         for (Forecast f : weatherDTO.getForecasts()) {
             f.setWeather(weather);
