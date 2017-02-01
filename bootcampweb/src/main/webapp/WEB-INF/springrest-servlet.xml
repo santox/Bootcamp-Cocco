@@ -3,17 +3,20 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:jaxrs-client="http://cxf.apache.org/jaxrs-client"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+       http://cxf.apache.org/jaxrs-client http://cxf.apache.org/schemas/jaxrs-client.xsd">
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="com.cocco.bootcamp.controller" />
+    <context:annotation-config/>
+    <context:component-scan base-package="com.cocco.bootcamp.proxy"/>
+    <context:component-scan base-package="com.cocco.bootcamp.ws"/>
 
     <!-- Read the property values from application.properties -->
     <context:property-placeholder location="classpath:application.properties"/>
@@ -72,10 +75,16 @@
     -->
     <jpa:repositories base-package="com.cocco.bootcamp.repository"/>
 
-    <jaxrs:client id="countriesAndStates" serviceClass="com.cocco.bootcamp.ws.CountriesAndStates" address="http://services.groupkt.com">
-        <jaxrs:providers><bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/></jaxrs:providers>
-    </jaxrs:client>
-    <context:annotation-config/>
-    <context:component-scan base-package="com.cocco.bootcamp.proxy"/>
+    <jaxrs-client:client id="countriesAndStates"
+                         serviceClass="com.cocco.bootcamp.ws.CountriesAndStates"
+                         address="http://services.groupkt.com"
+                         inheritHeaders="true">
+        <jaxrs-client:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs-client:providers>
+        <jaxrs-client:headers>
+            <entry key="Accept" value="application/json"/>
+        </jaxrs-client:headers>
+    </jaxrs-client:client>
 
 </beans>

@@ -2,12 +2,13 @@ package com.cocco.bootcamp.proxy;
 
 import com.cocco.bootcamp.builder.CountryBuilder;
 import com.cocco.bootcamp.domain.Country;
+import com.cocco.bootcamp.dto.JsonResponseCountry;
 import com.cocco.bootcamp.dto.RestResponseCountry;
 import com.cocco.bootcamp.dto.WSCountryDTO;
 import com.cocco.bootcamp.ws.CountriesAndStates;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,10 @@ import java.util.List;
  * Created by santi on 1/2/2017.
  */
 @Component
-public class RestProxy {
+public class RestProxyAdapter {
     private CountriesAndStates countriesAndStates;
 
-    @Autowired
+    @Resource
     public void setCountriesAndStates(CountriesAndStates countriesAndStates) {
         this.countriesAndStates = countriesAndStates;
     }
@@ -26,7 +27,8 @@ public class RestProxy {
     public List<Country> getCountries() {
         List<Country> countries = new ArrayList<>();
         CountryBuilder countryBuilder = new CountryBuilder();
-        RestResponseCountry restResponseCountry= countriesAndStates.getCountries();
+        JsonResponseCountry jsonResponseCountry = countriesAndStates.getCountries();
+        RestResponseCountry restResponseCountry= jsonResponseCountry.getRestResponseCountry();
         for (WSCountryDTO wsc:restResponseCountry.getResult()) {
             countryBuilder.newCountry()
                     .buildName(wsc.getName())
