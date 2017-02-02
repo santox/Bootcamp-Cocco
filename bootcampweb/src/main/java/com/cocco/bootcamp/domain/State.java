@@ -21,6 +21,7 @@ public class State {
     private String abbreviation;
     private long area;
     private String capital;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idCountry")
     private Country country;
