@@ -43,6 +43,12 @@ public class CountryController {
 
     @RequestMapping(value = "/country/add", method = RequestMethod.POST)
     public ResponseEntity<String> addCountry(@RequestBody Country country) {
+        if (countryRepository.findByCountryID2(country.getCountryID2()) != null) {
+            return new ResponseEntity<>(country.getCountryID2() + " is already in use!", HttpStatus.PRECONDITION_FAILED);
+        }
+        if (countryRepository.findByCountryID3(country.getCountryID3()) != null) {
+            return new ResponseEntity<>(country.getCountryID3() + " is already in use!", HttpStatus.PRECONDITION_FAILED);
+        }
         countryRepository.save(country);
         return new ResponseEntity<>(country.getName() + " added succesfully!", HttpStatus.CREATED);
     }

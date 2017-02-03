@@ -14,10 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by santi on 1/2/2017.
@@ -74,11 +71,17 @@ public class RestProxyAdapter {
         WeatherBuilder weatherBuilder = new WeatherBuilder();
         String url = "yql?q=select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + stateCapital + ", " + countryID2 + "\")&format=json&env=store://datatables.org/alltableswithkeys";
 
-        JsonResponseWeather jsonResponseWeather = weatherFromClient.getWeather(url);
+        String q= "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + stateCapital + ", " + countryID2 + "\")";
+        String format = "json";
+        String env = "store://datatables.org/alltableswithkeys";
+        JsonResponseWeather jsonResponseWeather = weatherFromClient.getWeather(q, format, env);
         if (jsonResponseWeather == null) {
             return null;
         }
         WeatherQuery weatherQuery = jsonResponseWeather.getQuery();
+        if (weatherQuery.getResults()==null) {
+            return null;
+        }
         WeatherResults weatherResults = weatherQuery.getResults();
         WeatherChannel weatherChannel = weatherResults.getChannel();
 
@@ -98,7 +101,7 @@ public class RestProxyAdapter {
 
         WeatherCondition weatherCondition = weatherItem.getCondition();
         TodayWeather todayWeather = new TodayWeather();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm a z", Locale.US);
         try {
             todayWeather.setDate(simpleDateFormat.parse(weatherCondition.getDate()));
         } catch (ParseException e) {
@@ -113,17 +116,22 @@ public class RestProxyAdapter {
                 .buildTodayWeather(todayWeather);
         Weather weather = weatherBuilder.getWeather();
 
+        simpleDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.US);
         ForecastBuilder forecastBuilder = new ForecastBuilder();
         List<Forecast> forecasts = new ArrayList<>();
         List<WeatherExtended> extendeds = weatherItem.getForecast();
         for (WeatherExtended we:extendeds) {
-            forecastBuilder.newForecast()
-                    .buildDate(we.getDate())
-                    .buildDay(we.getDay())
-                    .buildHigh(Integer.parseInt(we.getHigh()))
-                    .buildLow(Integer.parseInt(we.getLow()))
-                    .buildText(we.getText())
-                    .buildWeather(weather);
+            try {
+                forecastBuilder.newForecast()
+                        .buildDate(simpleDateFormat.parse(we.getDate()))
+                        .buildDay(we.getDay())
+                        .buildHigh(Integer.parseInt(we.getHigh()))
+                        .buildLow(Integer.parseInt(we.getLow()))
+                        .buildText(we.getText())
+                        .buildWeather(weather);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             forecasts.add(forecastBuilder.getForecast());
         }
 

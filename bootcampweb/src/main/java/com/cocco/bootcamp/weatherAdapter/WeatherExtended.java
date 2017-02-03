@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class WeatherExtended {
     private String code;
-    private Date date;
+    private String date;
     private String day;
     private String high;
     private String low;
@@ -24,11 +24,11 @@ public class WeatherExtended {
         this.code = code;
     }
 
-    public Date getDate() {
+    public String  getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

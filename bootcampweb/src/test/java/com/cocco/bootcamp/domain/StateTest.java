@@ -14,7 +14,7 @@ public class StateTest extends TestCase{
     public void setUp() throws Exception {
         DefaultStateBuilder defaultStateBuilder = new CordobaDefaultStateBuilder();
         StateDirector stateDirector = new StateDirector(defaultStateBuilder);
-        stateDirector.constructState("ARG");
+        stateDirector.constructState();
         state = stateDirector.getState();
     }
 

@@ -70,13 +70,15 @@ public class WeatherController {
 
     @RequestMapping(value = "/weather/{country}/{state}", method = RequestMethod.GET, headers="Accept=application/json")
     public ResponseEntity<Map<String, Object>> getWeather(@PathVariable(value = "country") String country, @PathVariable(value = "state") String state) {
-        Map<String, Object> map = new HashMap();
-        /*
-        Country c = countryRepository.findByCountryID3(country);
+        Map<String, Object> map;
+        map = restProxyAdapter.getWeather(country, state);
+        if (map != null) {return new ResponseEntity<>(map, HttpStatus.OK);}
+
+        Country c = countryRepository.findByCountryID2(country);
         if (c == null) {
             return new ResponseEntity<>(map, HttpStatus.PRECONDITION_FAILED);
         }
-        State s = stateRepository.findByAbbreviation(state);
+        State s = stateRepository.findByCapital(state);
         if (s == null) {
             return new ResponseEntity<>(map, HttpStatus.PRECONDITION_FAILED);
         }
@@ -87,10 +89,10 @@ public class WeatherController {
         }
         Weather weather = weathers.get(weathers.size()-1);
         List<Forecast> forecast = forecastRepository.findByWeather(weather);
+        map = new HashMap<>();
         map.put("weather", weather);
         map.put("forecast", forecast);
-        */
-        map = restProxyAdapter.getWeather(country, state);
+
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 

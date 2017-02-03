@@ -11,4 +11,5 @@ import java.util.List;
 public interface StateRepository extends CrudRepository<State, Integer> {
     List<State> findByCountryID3 (String countryID3);
     State findByAbbreviation (String abbreviation);
+    State findByCapital (String capital);
 }

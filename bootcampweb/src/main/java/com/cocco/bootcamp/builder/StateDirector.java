@@ -12,13 +12,14 @@ public class StateDirector {
         this.defaultStateBuilder = defaultStateBuilder;
     }
 
-    public void constructState(String existingCountryID3) {
+    public void constructState() {
         defaultStateBuilder.buildIdState();
-        defaultStateBuilder.buildCountryID3(existingCountryID3);
+        defaultStateBuilder.buildCountryID3();
         defaultStateBuilder.buildName();
         defaultStateBuilder.buildAbbreviation();
         defaultStateBuilder.buildArea();
         defaultStateBuilder.buildCapital();
+        defaultStateBuilder.buildCountry();
     }
 
     public State getState() {

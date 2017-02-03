@@ -7,10 +7,11 @@ import com.cocco.bootcamp.domain.State;
  */
 public interface DefaultStateBuilder {
     public void buildIdState();
-    public void buildCountryID3(String existingCountryID3);
+    public void buildCountryID3();
     public void buildName();
     public void buildAbbreviation();
     public void buildArea();
     public void buildCapital();
+    public void buildCountry();
     public State getState();
 }

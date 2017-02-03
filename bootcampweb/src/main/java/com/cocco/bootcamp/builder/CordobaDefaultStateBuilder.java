@@ -1,5 +1,6 @@
 package com.cocco.bootcamp.builder;
 
+import com.cocco.bootcamp.domain.Country;
 import com.cocco.bootcamp.domain.State;
 
 /**
@@ -16,8 +17,8 @@ public class CordobaDefaultStateBuilder implements DefaultStateBuilder {
         state.setIdState(1);
     }
 
-    public void buildCountryID3(String existingCountryID3) {
-        state.setCountryID3(existingCountryID3);
+    public void buildCountryID3() {
+        state.setCountryID3("ARG");
     }
 
     public void buildName() {
@@ -34,6 +35,14 @@ public class CordobaDefaultStateBuilder implements DefaultStateBuilder {
 
     public void buildCapital() {
         state.setCapital("Cordoba");
+    }
+
+    public void buildCountry() {
+        DefaultCountryBuilder defaultCountryBuilder = new ArgentinaDefaultCountryBuilder();
+        CountryDirector countryDirector = new CountryDirector(defaultCountryBuilder);
+        countryDirector.constructCountry();
+        Country country = countryDirector.getCountry();
+        state.setCountry(country);
     }
 
     public State getState() {

@@ -57,6 +57,12 @@ public class StateController {
         if (c == null) {
             return new ResponseEntity<>(state.getCountryID3() + " does not exist!", HttpStatus.PRECONDITION_FAILED);
         }
+        if (stateRepository.findByAbbreviation(state.getAbbreviation()) != null) {
+            return new ResponseEntity<>(state.getAbbreviation() + " already in use!", HttpStatus.PRECONDITION_FAILED);
+        }
+        if (stateRepository.findByCapital(state.getCapital()) != null) {
+            return new ResponseEntity<>(state.getCapital() + " already in use!", HttpStatus.PRECONDITION_FAILED);
+        }
         state.setCountry(c);
         stateRepository.save(state);
         return new ResponseEntity<>(state.getName() + " added succesfully!", HttpStatus.CREATED);

@@ -7,12 +7,12 @@ import javax.ws.rs.*;
 /**
  * Created by santi on 3/2/2017.
  */
-@Path("/")
+@Path("/v1/public")
 @Produces("application/json")
 public interface WeatherFromClient {
 
     @GET
     @Produces("application/json")
-    @Path("{url}")
-    public JsonResponseWeather getWeather(@PathParam(value = "url") String url);
+    @Path("/yql")
+    public JsonResponseWeather getWeather(@QueryParam(value = "q") String q, @QueryParam(value = "format") String format, @QueryParam(value = "env") String env);
 }

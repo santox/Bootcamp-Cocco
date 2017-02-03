@@ -46,6 +46,14 @@ public class CordobaDefaultWeatherBuilder implements DefaultWeatherBuilder {
         weather.setAtmosphere(a);
     }
 
+    public void buildState() {
+        DefaultStateBuilder defaultStateBuilder = new CordobaDefaultStateBuilder();
+        StateDirector stateDirector = new StateDirector(defaultStateBuilder);
+        stateDirector.constructState();
+        State state = stateDirector.getState();
+        weather.setState(state);
+    }
+
     public Weather getWeather() {
         return weather;
     }

@@ -17,6 +17,7 @@ public class WeatherDirector {
         defaultWeatherBuilder.buildTodayWeather();
         defaultWeatherBuilder.buildWind();
         defaultWeatherBuilder.buildAtmosphere();
+        defaultWeatherBuilder.buildState();
     }
 
     public Weather getWeather() {

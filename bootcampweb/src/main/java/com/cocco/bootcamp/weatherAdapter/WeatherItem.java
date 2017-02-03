@@ -17,6 +17,7 @@ public class WeatherItem {
     private String pubDate;
     private WeatherCondition condition;
     private List<WeatherExtended> forecast;
+    @JsonIgnore
     private String description;
     @JsonIgnore
     private Object guid;

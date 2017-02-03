@@ -10,5 +10,6 @@ public interface DefaultWeatherBuilder {
     public void buildTodayWeather();
     public void buildWind();
     public void buildAtmosphere();
+    public void buildState();
     public Weather getWeather();
 }
