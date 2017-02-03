@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface CountryRepository extends CrudRepository<Country, Integer> {
     Country findByCountryID3 (String countryID3);
+    Country findByCountryID2 (String countryID2);
 }

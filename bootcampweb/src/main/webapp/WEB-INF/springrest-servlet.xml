@@ -87,4 +87,16 @@
         </jaxrs-client:headers>
     </jaxrs-client:client>
 
+    <jaxrs-client:client id="weatherFromClient"
+                         serviceClass="com.cocco.bootcamp.ws.WeatherFromClient"
+                         address="https://query.yahooapis.com/v1/public"
+                         inheritHeaders="true">
+        <jaxrs-client:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs-client:providers>
+        <jaxrs-client:headers>
+            <entry key="Accept" value="application/json"/>
+        </jaxrs-client:headers>
+    </jaxrs-client:client>
+
 </beans>

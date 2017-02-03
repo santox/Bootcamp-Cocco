@@ -3,6 +3,7 @@ package com.cocco.bootcamp.controller;
 import com.cocco.bootcamp.builder.WeatherBuilder;
 import com.cocco.bootcamp.domain.*;
 import com.cocco.bootcamp.dto.WeatherDTO;
+import com.cocco.bootcamp.proxy.RestProxyAdapter;
 import com.cocco.bootcamp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,12 @@ public class WeatherController {
     private WindRepository windRepository;
     private AtmosphereRepository atmosphereRepository;
     private ForecastRepository forecastRepository;
+    private RestProxyAdapter restProxyAdapter;
+
+    @Autowired
+    public void setRestProxyAdapter(RestProxyAdapter restProxyAdapter) {
+        this.restProxyAdapter = restProxyAdapter;
+    }
 
     @Autowired
     public void setWeatherRepository(WeatherRepository weatherRepository) {
@@ -64,6 +71,7 @@ public class WeatherController {
     @RequestMapping(value = "/weather/{country}/{state}", method = RequestMethod.GET, headers="Accept=application/json")
     public ResponseEntity<Map<String, Object>> getWeather(@PathVariable(value = "country") String country, @PathVariable(value = "state") String state) {
         Map<String, Object> map = new HashMap();
+        /*
         Country c = countryRepository.findByCountryID3(country);
         if (c == null) {
             return new ResponseEntity<>(map, HttpStatus.PRECONDITION_FAILED);
@@ -81,6 +89,8 @@ public class WeatherController {
         List<Forecast> forecast = forecastRepository.findByWeather(weather);
         map.put("weather", weather);
         map.put("forecast", forecast);
+        */
+        map = restProxyAdapter.getWeather(country, state);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
